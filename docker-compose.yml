@@ -6,14 +6,14 @@ services:
       - "5000:5000"
     volumes:
       - .:/app
-      - photo_data:/app/photo
+      - photo_data:/app/photos
   telegram-bot:
     build:
       context: .
       dockerfile: dockerfile.bot
     volumes:
       - .:/app
-      - photo_data:/app/photo
+      - photo_data:/app/photos
     depends_on:
       - flask-app
 
