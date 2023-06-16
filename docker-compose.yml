@@ -1,0 +1,21 @@
+version: '3'
+services:
+  flask-app:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+      - photo_data:/app/photo
+  telegram-bot:
+    build:
+      context: .
+      dockerfile: dockerfile.bot
+    volumes:
+      - .:/app
+      - photo_data:/app/photo
+    depends_on:
+      - flask-app
+
+volumes:
+  photo_data:
