@@ -58,7 +58,7 @@ def get_photo_path(message):
         file_info = bot.get_file(file_id)
         file = requests.get(f'https://api.telegram.org/file/bot6185851405:AAG3x9J0XN33o9zMps88-EkWxjY7n525lg0/{file_info.file_path}')
         # отправка post запроса
-        response = requests.post('http://{API_URL}/upload_photo', files={'photo': file.content}, data = {"photo_path": f"{name}.jpg"})
+        response = requests.post('http://193.168.46.209:5000/upload_photo', files={'photo': file.content}, data = {"photo_path": f"{name}.jpg"})
 
         data = {
             'user_id': message.chat.id,
@@ -68,7 +68,7 @@ def get_photo_path(message):
             'location': location,
             'photo_path': f"{name}.jpg"
         }
-        response = requests.post('http://{API_URL}:5000/save_data', data=data)
+        response = requests.post('http://193.168.46.209:5000/save_data', data=data)
 
         # отправляем словарь пользователю
         bot.send_message(chat_id=message.chat.id, text=str('Все готово, брат, проверяй'))
@@ -79,7 +79,7 @@ def get_photo_path(message):
 @bot.message_handler(content_types=['text'])
 def handle_text(message):
     object_name = message.text
-    response = requests.get(f'http://{API_URL}:5000/get_data?object_name={object_name}')
+    response = requests.get(f'http://193.168.46.209:5000/get_data?object_name={object_name}')
     jsona = json.loads(response.text.replace("\n", ""))
 
     try:
@@ -115,7 +115,7 @@ def handle_text(message):
             photo_path_data.append(photo_path[key])
         
         for photo in photo_path_data:
-            url = 'http://{API_URL}:5000/get_photo'
+            url = 'http://193.168.46.209:5000/get_photo'
             params = {'filename': photo}
             response = requests.get(url, params=params)
 
